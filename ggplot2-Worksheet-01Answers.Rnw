@@ -1,0 +1,56 @@
+\documentclass{article}
+\bold Owen Xu, hxu829
+
+
+\begin{document}
+\vspace{1cm}
+\SweaveOpts{}
+
+Exercise 1
+
+<<exercise 1>>=
+library(ggplot2)
+ggplot(mtcars, aes(x=mpg)) + geom_density(adjust = 1/2,fill = "red")
+@
+
+Exercise 2
+
+<<exercise 2.1>>=
+mtcars$all <- "all"
+ggplot(mtcars, aes(all, mpg)) + geom_boxplot()
+@
+
+<<exercise 2.2>>=
+mtcars$all <- "all"
+ggplot(mtcars, aes(all, mpg)) + geom_boxplot() + coord_flip()
+@
+
+
+Exercise 3
+
+<<exercise 3.1>>=
+
+ggplot(mtcars, aes(disp, mpg, shape = factor(am,labels = 
+  c("automatic","manual")))) + geom_point() + scale_shape_discrete(name = "Transmission")
+@
+
+<<exercise 3.2>>=
+
+mtcars$Transmission <- factor(mtcars$am, labels =c("automatic","manual"))
+
+ggplot(mtcars, aes(disp, mpg, shape = Transmission)) + geom_point() +
+  stat_smooth(aes(group = Transmission, colour = Transmission),method = lm) + 
+  facet_wrap(~ Transmission)
+@
+
+
+<<exercise 3.3>>=
+
+ggplot(mtcars,aes(disp, mpg, shape = Transmission)) + geom_point(colour = "black") + 
+  stat_smooth(aes(colour = Transmission),method = "lm") + 
+  facet_grid(Transmission ~ cyl) +
+  ggtitle("Miles per Gallon Against Displacement Conditioning on 
+        Transmission an Number of Cylinders")
+@
+
+\end{document}
